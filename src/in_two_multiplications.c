@@ -1,8 +1,9 @@
 #include <stdio.h>
 
 int main() {
-    int x;
-    int a, res;
+    int x = 0;
+    int a = 0;
+    int res = 0;
 
     printf("Введите число x: ");
     scanf("%d", &x);
