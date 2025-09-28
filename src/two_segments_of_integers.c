@@ -18,7 +18,8 @@ void swap_two_segments(int *array, int first_segment_length, int second_segment_
 }
 
 int main() {
-    int first_segment_length, second_segment_length;
+    int first_segment_length = 0;
+    int second_segment_length = 0;
 
     printf("Введите длину первого сегмента массива (m): ");
     scanf("%d", &first_segment_length);
@@ -31,6 +32,7 @@ int main() {
 
     printf("Введите %d целых чисел массива через пробел:\n", total_length);
     for (int i = 0; i < total_length; ++i) {
+        input_array[i] = 0;
         scanf("%d", &input_array[i]);
     }
 
