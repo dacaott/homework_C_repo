@@ -29,7 +29,7 @@ int divide(int a, int b) {
 }
 
 int main() {
-    int a, b, result;
+    int a = 0, b = 0, result = 0;
 
     printf("Число a: ");
     scanf("%d", &a);
