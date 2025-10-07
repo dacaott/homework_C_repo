@@ -9,7 +9,7 @@
 Как собрать:
 
 1. Сначала создаём sort.s из bubble.c:
-   gcc -O0 -S sort.c -o sort.s
+   gcc -O2 -S sort.c -o sort.s
 
 2. Затем собираем проект:
    gcc -no-pie -o sort main.c sort.s
