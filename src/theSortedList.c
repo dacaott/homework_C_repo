@@ -88,7 +88,7 @@ int main(void) {
 
   printf("Программа работы с сортированным списком\n");
 
-  do {
+  while (1) {
     printf("\nМеню:\n");
     printf("0 – выйти\n");
     printf("1 – добавить значение\n");
@@ -124,7 +124,9 @@ int main(void) {
     default:
       printf("Неизвестная команда.\n");
     }
-  } while (cmd != 0);
+  }
+  while (cmd != 0)
+    ;
 
   free_list(head);
   return 0;
