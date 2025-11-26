@@ -21,4 +21,4 @@ jobs:
           cmake --build build
       - name: Lint
         run: |
-          run-clang-tidy-18 -p=build
+          find . -name "*.cpp" -o -name "*.h" -o -name "*.hpp" | xargs clang-tidy-18 -p=build
