@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.25)
+
+add_executable(inTwoMultiplications inTwoMultiplications.c)
+add_executable(incompleteQuotient incompleteQuotient.c)
+add_executable(luckyTickets luckyTickets.c)
+add_executable(twoSegmentsOfIntegers twoSegmentsOfIntegers.c)
