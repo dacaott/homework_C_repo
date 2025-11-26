@@ -1,0 +1,6 @@
+/home/tatiana/homework_C_repo/src/homeworkNumber2/build/CMakeFiles/inTwoMultiplications.dir
+/home/tatiana/homework_C_repo/src/homeworkNumber2/build/CMakeFiles/incompleteQuotient.dir
+/home/tatiana/homework_C_repo/src/homeworkNumber2/build/CMakeFiles/luckyTickets.dir
+/home/tatiana/homework_C_repo/src/homeworkNumber2/build/CMakeFiles/twoSegmentsOfIntegers.dir
+/home/tatiana/homework_C_repo/src/homeworkNumber2/build/CMakeFiles/edit_cache.dir
+/home/tatiana/homework_C_repo/src/homeworkNumber2/build/CMakeFiles/rebuild_cache.dir

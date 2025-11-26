@@ -1,49 +1,66 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void reverseSegment(int *array, int startIndex, int endIndex) {
-  while (startIndex < endIndex) {
-    int temp = array[startIndex];
-    array[startIndex] = array[endIndex];
-    array[endIndex] = temp;
-    startIndex++;
-    endIndex--;
-  }
+void reverse_segment(int* array, int startIndex, int endIndex)
+{
+    while (startIndex < endIndex) {
+        int temp = array[startIndex];
+        array[startIndex] = array[endIndex];
+        array[endIndex] = temp;
+        startIndex++;
+        endIndex--;
+    }
 }
 
-void swapTwoSegments(int *array, int firstSegmentLength,
-                     int secondSegmentLength) {
-  int totalLength = firstSegmentLength + secondSegmentLength;
-  reverseSegment(array, 0, firstSegmentLength - 1);
-  reverseSegment(array, firstSegmentLength, totalLength - 1);
-  reverseSegment(array, 0, totalLength - 1);
+void swap_two_segments(int* array, int firstSegmentLength, int secondSegmentLength)
+{
+    int totalLength = firstSegmentLength + secondSegmentLength;
+    reverse_segment(array, 0, firstSegmentLength - 1);
+    reverse_segment(array, firstSegmentLength, totalLength - 1);
+    reverse_segment(array, 0, totalLength - 1);
 }
 
-int main() {
-  int firstSegmentLength = 0;
-  int secondSegmentLength = 0;
+int main()
+{
+    int firstSegmentLength = 0;
+    int secondSegmentLength = 0;
 
-  printf("Введите длину первого сегмента массива (m): ");
-  scanf("%d", &firstSegmentLength);
+    printf("Введите длину первого сегмента массива (m): ");
+    scanf("%d", &firstSegmentLength);
 
-  printf("Введите длину второго сегмента массива (n): ");
-  scanf("%d", &secondSegmentLength);
+    printf("Введите длину второго сегмента массива (n): ");
+    scanf("%d", &secondSegmentLength);
 
-  int totalLength = firstSegmentLength + secondSegmentLength;
-  int inputArray[totalLength];
+    // Проверка на валидность ввода
+    if (firstSegmentLength <= 0 || secondSegmentLength <= 0) {
+        printf("Ошибка: длины сегментов должны быть положительными числами.\n");
+        return 1;
+    }
 
-  printf("Введите %d целых чисел массива через пробел:\n", totalLength);
-  for (int i = 0; i < totalLength; ++i) {
-    inputArray[i] = 0;
-    scanf("%d", &inputArray[i]);
-  }
+    int totalLength = firstSegmentLength + secondSegmentLength;
 
-  swapTwoSegments(inputArray, firstSegmentLength, secondSegmentLength);
+    // Динамическое выделение памяти вместо VLA
+    int* inputArray = (int*)malloc(totalLength * sizeof(int));
+    if (inputArray == NULL) {
+        printf("Ошибка выделения памяти.\n");
+        return 1;
+    }
 
-  printf("Полученный массив:\n");
-  for (int i = 0; i < totalLength; ++i) {
-    printf("%d ", inputArray[i]);
-  }
-  printf("\n");
+    printf("Введите %d целых чисел массива через пробел:\n", totalLength);
+    for (int i = 0; i < totalLength; ++i) {
+        scanf("%d", &inputArray[i]);
+    }
 
-  return 0;
+    swap_two_segments(inputArray, firstSegmentLength, secondSegmentLength);
+
+    printf("Полученный массив:\n");
+    for (int i = 0; i < totalLength; ++i) {
+        printf("%d ", inputArray[i]);
+    }
+    printf("\n");
+
+    // Освобождение памяти
+    free(inputArray);
+
+    return 0;
 }

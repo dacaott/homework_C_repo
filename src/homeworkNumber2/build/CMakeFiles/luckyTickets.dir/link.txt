@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/luckyTickets.dir/link.d CMakeFiles/luckyTickets.dir/luckyTickets.c.o -o luckyTickets

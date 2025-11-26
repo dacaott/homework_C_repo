@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/inTwoMultiplications.dir/link.d CMakeFiles/inTwoMultiplications.dir/inTwoMultiplications.c.o -o inTwoMultiplications

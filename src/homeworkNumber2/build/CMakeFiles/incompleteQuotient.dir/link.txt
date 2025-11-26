@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/incompleteQuotient.dir/link.d CMakeFiles/incompleteQuotient.dir/incompleteQuotient.c.o -o incompleteQuotient

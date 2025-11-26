@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int divide(int a, int b) {
+int divide(int a, int b)
+{
     int quotient = 0;
     int sign = 1;
 
@@ -14,7 +15,7 @@ int divide(int a, int b) {
     }
 
     if (b == 0) {
-        return 0; 
+        return 0;
     }
 
     while (a >= b) {
@@ -28,7 +29,8 @@ int divide(int a, int b) {
     return quotient;
 }
 
-int main() {
+int main()
+{
     int a = 0, b = 0, result = 0;
 
     printf("Число a: ");
