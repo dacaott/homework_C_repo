@@ -17,7 +17,7 @@ int multiply(int a, int b)
     return result;
 }
 
-void print_table()
+void printTable()
 {
     for (int i = 1; i <= 5; i++) {
         for (int j = 1; j <= 5; j++) {
@@ -29,6 +29,6 @@ void print_table()
 
 int main()
 {
-    print_table();
+    printTable();
     return 0;
 }
