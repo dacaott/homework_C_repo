@@ -1,5 +1,5 @@
-cmakeMinimumRequired(VERSION 3.25)
+cmake_minimum_required(VERSION 3.25)
 
-addExecutable(test_app
+add_executable(test_app
     brokenCode.c
 )
