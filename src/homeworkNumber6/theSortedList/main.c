@@ -1,14 +1,11 @@
 #include "sortedList.h"
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 int main(void)
 {
     Node* head = NULL;
     int cmd, val;
-    char buffer[32];
 
     printf("Программа работы с сортированным списком\n");
 
@@ -20,46 +17,33 @@ int main(void)
         printf("3 – распечатать список\n");
         printf("Ваш выбор: ");
 
-        if (!fgets(buffer, sizeof(buffer), stdin)) {
-            printf("Ошибка ввода.\n");
-            break;
-        }
-        char* endptr;
-        errno = 0;
-        cmd = strtol(buffer, &endptr, 10);
-        if (errno != 0 || (*endptr != '\n' && *endptr != '\0')) {
+        if (scanf_s("%d", &cmd) != 1) {
             printf("Некорректный ввод.\n");
+            while (getchar() != '\n')
+                ;
             continue;
         }
 
         switch (cmd) {
         case 1:
             printf("Введите число для добавления: ");
-            if (!fgets(buffer, sizeof(buffer), stdin)) {
+            if (scanf_s("%d", &val) == 1)
+                addSorted(&head, val);
+            else {
                 printf("Ошибка ввода.\n");
-                continue;
+                while (getchar() != '\n')
+                    ;
             }
-            errno = 0;
-            val = strtol(buffer, &endptr, 10);
-            if (errno != 0 || (*endptr != '\n' && *endptr != '\0')) {
-                printf("Ошибка ввода.\n");
-                continue;
-            }
-            addSorted(&head, val);
             break;
         case 2:
             printf("Введите число для удаления: ");
-            if (!fgets(buffer, sizeof(buffer), stdin)) {
+            if (scanf_s("%d", &val) == 1)
+                deleteValue(&head, val);
+            else {
                 printf("Ошибка ввода.\n");
-                continue;
+                while (getchar() != '\n')
+                    ;
             }
-            errno = 0;
-            val = strtol(buffer, &endptr, 10);
-            if (errno != 0 || (*endptr != '\n' && *endptr != '\0')) {
-                printf("Ошибка ввода.\n");
-                continue;
-            }
-            deleteValue(&head, val);
             break;
         case 3:
             printList(head);
