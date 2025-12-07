@@ -1,4 +1,5 @@
 #include "sortedList.h"
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,6 +7,7 @@ int main(void)
 {
     Node* head = NULL;
     int cmd, val;
+    char buffer[64];
 
     printf("Программа работы с сортированным списком\n");
 
@@ -17,33 +19,48 @@ int main(void)
         printf("3 – распечатать список\n");
         printf("Ваш выбор: ");
 
-        if (scanf("%d", &cmd) != 1) { // NOLINT(cert-err34-c)
+        if (!fgets(buffer, sizeof(buffer), stdin)) {
+            printf("Ошибка ввода.\n");
+            continue;
+        }
+
+        char* endptr;
+        long tmp = strtol(buffer, &endptr, 10);
+        if (endptr == buffer || (*endptr != '\n' && *endptr != '\0') || tmp < INT_MIN || tmp > INT_MAX) {
             printf("Некорректный ввод.\n");
             while (getchar() != '\n')
                 ;
             continue;
         }
+        cmd = (int)tmp;
 
         switch (cmd) {
         case 1:
             printf("Введите число для добавления: ");
-            if (scanf("%d", &val) == 1) // NOLINT(cert-err34-c)
-                addSorted(&head, val);
-            else {
-                printf("Ошибка ввода.\n");
-                while (getchar() != '\n')
-                    ;
+            if (!fgets(buffer, sizeof(buffer), stdin)) {
+                continue;
             }
+            tmp = strtol(buffer, &endptr, 10);
+            if (endptr == buffer || (*endptr != '\n' && *endptr != '\0') || tmp < INT_MIN || tmp > INT_MAX) {
+                printf("Некорректный ввод.\n");
+                continue;
+            }
+            val = (int)tmp;
+            addSorted(&head, val);
             break;
         case 2:
             printf("Введите число для удаления: ");
-            if (scanf("%d", &val) == 1) // NOLINT(cert-err34-c)
-                deleteValue(&head, val);
-            else {
+            if (!fgets(buffer, sizeof(buffer), stdin)) {
                 printf("Ошибка ввода.\n");
-                while (getchar() != '\n')
-                    ;
+                continue;
             }
+            tmp = strtol(buffer, &endptr, 10);
+            if (endptr == buffer || (*endptr != '\n' && *endptr != '\0') || tmp < INT_MIN || tmp > INT_MAX) {
+                printf("Некорректный ввод.\n");
+                continue;
+            }
+            val = (int)tmp;
+            deleteValue(&head, val);
             break;
         case 3:
             printList(head);
