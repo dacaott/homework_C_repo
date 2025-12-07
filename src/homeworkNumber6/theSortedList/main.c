@@ -17,7 +17,7 @@ int main(void)
         printf("3 – распечатать список\n");
         printf("Ваш выбор: ");
 
-        if (scanf_s("%d", &cmd) != 1) {
+        if (scanf("%d", &cmd) != 1) { // NOLINT(cert-err34-c)
             printf("Некорректный ввод.\n");
             while (getchar() != '\n')
                 ;
@@ -27,7 +27,7 @@ int main(void)
         switch (cmd) {
         case 1:
             printf("Введите число для добавления: ");
-            if (scanf_s("%d", &val) == 1)
+            if (scanf("%d", &val) == 1) // NOLINT(cert-err34-c)
                 addSorted(&head, val);
             else {
                 printf("Ошибка ввода.\n");
@@ -37,7 +37,7 @@ int main(void)
             break;
         case 2:
             printf("Введите число для удаления: ");
-            if (scanf_s("%d", &val) == 1)
+            if (scanf("%d", &val) == 1) // NOLINT(cert-err34-c)
                 deleteValue(&head, val);
             else {
                 printf("Ошибка ввода.\n");
