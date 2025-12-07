@@ -18,7 +18,10 @@ bool testInsertBeginning()
     Node* head = NULL;
     addSorted(&head, 10);
     addSorted(&head, 5);
-    bool result = (head != NULL && head->value == 5 && head->next != NULL && head->next->value == 10);
+    bool result = false;
+    if (head && head->next) {
+        result = (head->value == 5 && head->next->value == 10 && head->next->next == NULL);
+    }
     freeList(head);
     return result;
 }
@@ -28,7 +31,10 @@ bool testInsertEnd()
     Node* head = NULL;
     addSorted(&head, 5);
     addSorted(&head, 10);
-    bool result = (head != NULL && head->value == 5 && head->next != NULL && head->next->value == 10);
+    bool result = false;
+    if (head && head->next) {
+        result = (head->value == 5 && head->next->value == 10 && head->next->next == NULL);
+    }
     freeList(head);
     return result;
 }
@@ -40,7 +46,13 @@ bool testInsertMiddle()
     addSorted(&head, 15);
     addSorted(&head, 10);
 
-    bool result = (head != NULL && head->value == 5 && head->next != NULL && head->next->value == 10 && head->next->next != NULL && head->next->next->value == 15);
+    bool result = false;
+    if (head && head->next && head->next->next) {
+        result = (head->value == 5 &&
+                  head->next->value == 10 &&
+                  head->next->next->value == 15 &&
+                  head->next->next->next == NULL);
+    }
     freeList(head);
     return result;
 }
@@ -51,7 +63,10 @@ bool testDeleteBeginning()
     addSorted(&head, 5);
     addSorted(&head, 10);
     deleteValue(&head, 5);
-    bool result = (head != NULL && head->value == 10 && head->next == NULL);
+    bool result = false;
+    if (head && head->next == NULL) {
+        result = (head->value == 10);
+    }
     freeList(head);
     return result;
 }
@@ -62,7 +77,10 @@ bool testDeleteEnd()
     addSorted(&head, 5);
     addSorted(&head, 10);
     deleteValue(&head, 10);
-    bool result = (head != NULL && head->value == 5 && head->next == NULL);
+    bool result = false;
+    if (head && head->next == NULL) {
+        result = (head->value == 5);
+    }
     freeList(head);
     return result;
 }
@@ -76,7 +94,7 @@ bool testSortedProperty()
 
     bool sorted = true;
     Node* cur = head;
-    while (cur != NULL && cur->next != NULL) {
+    while (cur && cur->next) {
         if (cur->value > cur->next->value) {
             sorted = false;
             break;
