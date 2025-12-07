@@ -9,5 +9,4 @@ foreach(CMAKE_LIST ${CMAKE_LISTS})
     add_subdirectory(${SUBDIR})
 endforeach()
 
-
 add_compile_options(-Wall -Wextra -Wpedantic)
