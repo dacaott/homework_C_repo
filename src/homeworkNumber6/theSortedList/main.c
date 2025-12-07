@@ -6,6 +6,7 @@ int main(void)
 {
     Node* head = NULL;
     int cmd, val;
+    char buffer[32];
 
     printf("Программа работы с сортированным списком\n");
 
@@ -16,18 +17,25 @@ int main(void)
         printf("2 – удалить значение\n");
         printf("3 – распечатать список\n");
         printf("Ваш выбор: ");
-        if (scanf("%d", &cmd) != 1) {
-            printf("Некорректный ввод.\n");
+
+        if (!fgets(buffer, sizeof(buffer), stdin)) {
+            printf("Ошибка ввода.\n");
             break;
+        }
+
+        if (sscanf(buffer, "%d", &cmd) != 1) {
+            printf("Некорректный ввод.\n");
+            continue;
         }
 
         switch (cmd) {
         case 1:
             printf("Введите число для добавления: ");
-            if (scanf("%d", &val) == 1)
-                addSorted(&head, val);
-            else
+            if (!fgets(buffer, sizeof(buffer), stdin) || sscanf(buffer, "%d", &val) != 1) {
                 printf("Ошибка ввода.\n");
+                continue;
+            }
+            addSorted(&head, val);
             break;
         case 2:
             printf("Введите число для удаления: ");
