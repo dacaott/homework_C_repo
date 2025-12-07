@@ -1,7 +1,7 @@
-add_executable(sorted_list main.c sortedList.c)
-target_link_libraries(sorted_list PRIVATE stdhw)
+add_library(SortedList sortedList.c)
 
-add_executable(sorted_list_test test.c sortedList.c)
-target_link_libraries(sorted_list_test PRIVATE stdhw)
+add_executable(sortedList main.c)
+target_link_libraries(sortedList PRIVATE SortedList)
 
-add_test(NAME sorted_list_test COMMAND sorted_list_test --test)
+add_executable(sortedListTest test.c)
+target_link_libraries(sortedListTest PRIVATE SortedList)
