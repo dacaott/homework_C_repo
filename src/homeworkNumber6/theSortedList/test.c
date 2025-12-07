@@ -90,16 +90,19 @@ bool testSortedProperty()
     addSorted(&head, 2);
 
     bool sorted = true;
-    Node* cur = head;
-    while (cur && cur->next) {
+    for (Node* cur = head; cur && cur->next; cur = cur->next) {
         if (cur->value > cur->next->value) {
             sorted = false;
             break;
         }
-        cur = cur->next;
     }
 
-    bool result = sorted && (head->value == 1 && head->next->value == 2 && head->next->next->value == 3);
+    if (!(head && head->next && head->next->next)) {
+        freeList(head);
+        return false;
+    }
+
+    bool result = sorted && head->value == 1 && head->next->value == 2 && head->next->next->value == 3;
     freeList(head);
     return result;
 }
