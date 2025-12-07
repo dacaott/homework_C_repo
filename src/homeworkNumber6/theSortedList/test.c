@@ -4,75 +4,75 @@
 #include <stdlib.h>
 #include <string.h>
 
-bool test_empty_list()
+bool testEmptyList()
 {
     Node* head = NULL;
-    add_sorted(&head, 5);
+    addSorted(&head, 5);
     bool result = (head != NULL && head->value == 5 && head->next == NULL);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-bool test_insert_beginning()
+bool testInsertBeginning()
 {
     Node* head = NULL;
-    add_sorted(&head, 10);
-    add_sorted(&head, 5);
+    addSorted(&head, 10);
+    addSorted(&head, 5);
     bool result = (head != NULL && head->value == 5 && head->next != NULL && head->next->value == 10);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-bool test_insert_end()
+bool testInsertEnd()
 {
     Node* head = NULL;
-    add_sorted(&head, 5);
-    add_sorted(&head, 10);
+    addSorted(&head, 5);
+    addSorted(&head, 10);
     bool result = (head != NULL && head->value == 5 && head->next != NULL && head->next->value == 10);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-bool test_insert_middle()
+bool testInsertMiddle()
 {
     Node* head = NULL;
-    add_sorted(&head, 5);
-    add_sorted(&head, 15);
-    add_sorted(&head, 10);
+    addSorted(&head, 5);
+    addSorted(&head, 15);
+    addSorted(&head, 10);
 
     bool result = (head != NULL && head->value == 5 && head->next != NULL && head->next->value == 10 && head->next->next != NULL && head->next->next->value == 15);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-bool test_delete_beginning()
+bool testDeleteBeginning()
 {
     Node* head = NULL;
-    add_sorted(&head, 5);
-    add_sorted(&head, 10);
-    delete_value(&head, 5);
+    addSorted(&head, 5);
+    addSorted(&head, 10);
+    deleteValue(&head, 5);
     bool result = (head != NULL && head->value == 10 && head->next == NULL);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-bool test_delete_end()
+bool testDeleteEnd()
 {
     Node* head = NULL;
-    add_sorted(&head, 5);
-    add_sorted(&head, 10);
-    delete_value(&head, 10);
+    addSorted(&head, 5);
+    addSorted(&head, 10);
+    deleteValue(&head, 10);
     bool result = (head != NULL && head->value == 5 && head->next == NULL);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-bool test_sorted_property()
+bool testSortedProperty()
 {
     Node* head = NULL;
-    add_sorted(&head, 3);
-    add_sorted(&head, 1);
-    add_sorted(&head, 2);
+    addSorted(&head, 3);
+    addSorted(&head, 1);
+    addSorted(&head, 2);
 
     bool sorted = true;
     Node* cur = head;
@@ -85,25 +85,25 @@ bool test_sorted_property()
     }
 
     bool result = sorted && (head->value == 1 && head->next->value == 2 && head->next->next->value == 3);
-    free_list(head);
+    freeList(head);
     return result;
 }
 
-void run_tests()
+void runTests()
 {
     printf("=== ТЕСТИРОВАНИЕ СОРТИРОВАННОГО СПИСКА ===\n\n");
 
     struct {
         const char* name;
-        bool (*test_func)();
+        bool (*testFunc)();
     } tests[] = {
-        { "Добавление в пустой список", test_empty_list },
-        { "Добавление в начало", test_insert_beginning },
-        { "Добавление в конец", test_insert_end },
-        { "Добавление в середину", test_insert_middle },
-        { "Удаление из начала", test_delete_beginning },
-        { "Удаление из конца", test_delete_end },
-        { "Сохранение сортированности", test_sorted_property },
+        { "Добавление в пустой список", testEmptyList },
+        { "Добавление в начало", testInsertBeginning },
+        { "Добавление в конец", testInsertEnd },
+        { "Добавление в середину", testInsertMiddle },
+        { "Удаление из начала", testDeleteBeginning },
+        { "Удаление из конца", testDeleteEnd },
+        { "Сохранение сортированности", testSortedProperty },
     };
 
     int total = sizeof(tests) / sizeof(tests[0]);
@@ -111,7 +111,7 @@ void run_tests()
 
     for (int i = 0; i < total; i++) {
         printf("Тест %d: %s... ", i + 1, tests[i].name);
-        bool result = tests[i].test_func();
+        bool result = tests[i].testFunc();
 
         if (result) {
             printf("ПРОЙДЕН\n");
@@ -133,7 +133,7 @@ void run_tests()
 int main(int argc, char* argv[])
 {
     if (argc == 2 && strcmp(argv[1], "--test") == 0) {
-        run_tests();
+        runTests();
         return 0;
     }
 
