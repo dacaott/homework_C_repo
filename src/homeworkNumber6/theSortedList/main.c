@@ -1,6 +1,8 @@
 #include "sortedList.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
@@ -22,8 +24,10 @@ int main(void)
             printf("Ошибка ввода.\n");
             break;
         }
-
-        if (sscanf(buffer, "%d", &cmd) != 1) {
+        char* endptr;
+        errno = 0;
+        cmd = strtol(buffer, &endptr, 10);
+        if (errno != 0 || (*endptr != '\n' && *endptr != '\0')) {
             printf("Некорректный ввод.\n");
             continue;
         }
@@ -31,7 +35,13 @@ int main(void)
         switch (cmd) {
         case 1:
             printf("Введите число для добавления: ");
-            if (!fgets(buffer, sizeof(buffer), stdin) || sscanf(buffer, "%d", &val) != 1) {
+            if (!fgets(buffer, sizeof(buffer), stdin)) {
+                printf("Ошибка ввода.\n");
+                continue;
+            }
+            errno = 0;
+            val = strtol(buffer, &endptr, 10);
+            if (errno != 0 || (*endptr != '\n' && *endptr != '\0')) {
                 printf("Ошибка ввода.\n");
                 continue;
             }
@@ -39,10 +49,17 @@ int main(void)
             break;
         case 2:
             printf("Введите число для удаления: ");
-            if (scanf("%d", &val) == 1)
-                deleteValue(&head, val);
-            else
+            if (!fgets(buffer, sizeof(buffer), stdin)) {
                 printf("Ошибка ввода.\n");
+                continue;
+            }
+            errno = 0;
+            val = strtol(buffer, &endptr, 10);
+            if (errno != 0 || (*endptr != '\n' && *endptr != '\0')) {
+                printf("Ошибка ввода.\n");
+                continue;
+            }
+            deleteValue(&head, val);
             break;
         case 3:
             printList(head);
