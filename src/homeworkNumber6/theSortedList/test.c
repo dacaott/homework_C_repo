@@ -48,10 +48,7 @@ bool testInsertMiddle()
 
     bool result = false;
     if (head && head->next && head->next->next) {
-        result = (head->value == 5 &&
-                  head->next->value == 10 &&
-                  head->next->next->value == 15 &&
-                  head->next->next->next == NULL);
+        result = (head->value == 5 && head->next->value == 10 && head->next->next->value == 15 && head->next->next->next == NULL);
     }
     freeList(head);
     return result;
