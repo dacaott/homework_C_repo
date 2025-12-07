@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void add_sorted(Node** head, int val)
+void addSorted(Node** head, int val)
 {
     Node* newNode = malloc(sizeof(Node));
     if (!newNode) {
@@ -26,7 +26,7 @@ void add_sorted(Node** head, int val)
     cur->next = newNode;
 }
 
-void delete_value(Node** head, int val)
+void deleteValue(Node** head, int val)
 {
     if (*head == NULL) {
         printf("Список пуст.\n");
@@ -54,7 +54,7 @@ void delete_value(Node** head, int val)
     printf("Элемент %d удалён.\n", val);
 }
 
-void print_list(Node* head)
+void printList(Node* head)
 {
     if (!head) {
         printf("Список пуст.\n");
@@ -66,7 +66,7 @@ void print_list(Node* head)
     printf("\n");
 }
 
-void free_list(Node* head)
+void freeList(Node* head)
 {
     while (head) {
         Node* tmp = head;

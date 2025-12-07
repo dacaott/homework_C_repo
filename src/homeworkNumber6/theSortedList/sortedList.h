@@ -6,9 +6,9 @@ typedef struct Node {
     struct Node* next;
 } Node;
 
-void add_sorted(Node** head, int val);
-void delete_value(Node** head, int val);
-void print_list(Node* head);
-void free_list(Node* head);
+void addSorted(Node** head, int val);
+void deleteValue(Node** head, int val);
+void printList(Node* head);
+void freeList(Node* head);
 
 #endif

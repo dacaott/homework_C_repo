@@ -25,29 +25,29 @@ int main(void)
         case 1:
             printf("Введите число для добавления: ");
             if (scanf("%d", &val) == 1)
-                add_sorted(&head, val);
+                addSorted(&head, val);
             else
                 printf("Ошибка ввода.\n");
             break;
         case 2:
             printf("Введите число для удаления: ");
             if (scanf("%d", &val) == 1)
-                delete_value(&head, val);
+                deleteValue(&head, val);
             else
                 printf("Ошибка ввода.\n");
             break;
         case 3:
-            print_list(head);
+            printList(head);
             break;
         case 0:
             printf("Выход...\n");
-            free_list(head);
+            freeList(head);
             return 0;
         default:
             printf("Неизвестная команда.\n");
         }
     }
 
-    free_list(head);
+    freeList(head);
     return 0;
 }
