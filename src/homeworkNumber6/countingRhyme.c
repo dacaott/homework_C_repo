@@ -34,6 +34,7 @@ Circle createCircle(int n)
 int josephus(Circle* c, int m)
 {
     Node* cur = c->last; // текущий указывает на предыдущего
+
     while (cur->next != cur) {
         for (int i = 1; i < m; i++) {
             cur = cur->next; // считаем m-1 воинов
