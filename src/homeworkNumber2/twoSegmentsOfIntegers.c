@@ -40,6 +40,7 @@ int main() {
   swapTwoSegments(inputArray, firstSegmentLength, secondSegmentLength);
 
   printf("Полученный массив:\n");
+
   for (int i = 0; i < totalLength; ++i) {
     printf("%d ", inputArray[i]);
   }
