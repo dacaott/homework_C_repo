@@ -110,11 +110,15 @@ int main(void)
 {
     char expression[101];
     printf("Введите выражение (до 100 символов):\n");
-    if (scanf("%100[^\n]", expression) != 1) {
+    if (fgets(expression, sizeof(expression), stdin) == NULL) {
         printf("Ошибка ввода\n");
         return 1;
     }
     int len = strlen(expression);
+    if (len > 0 && expression[len - 1] == '\n') {
+        expression[len - 1] = '\0';
+        len--;
+    }
 
     // вызов функции преобразования
     char* result = convertString(expression, len);
