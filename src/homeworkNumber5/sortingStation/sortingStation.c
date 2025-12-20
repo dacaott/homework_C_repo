@@ -114,14 +114,14 @@ int main(void)
         printf("Ошибка ввода\n");
         return 1;
     }
-    int len = strlen(expression);
+    size_t len = strlen(expression);
     if (len > 0 && expression[len - 1] == '\n') {
         expression[len - 1] = '\0';
         len--;
     }
 
     // вызов функции преобразования
-    char* result = convertString(expression, len);
+    char* result = convertString(expression, (int)len);
 
     if (result == NULL) {
         printf("ОШИБКА\n");
