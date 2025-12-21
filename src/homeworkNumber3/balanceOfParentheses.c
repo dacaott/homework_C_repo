@@ -3,17 +3,16 @@
 
 bool checkBalance(char str[])
 {
-    int i = 0;
     int balance = 0;
     bool isBalanced = true;
 
-    for (i = 0; str[i] != '\0'; i++) {
+    for (int i = 0; str[i] != '\0'; i++) {
         if (str[i] == '(')
             balance++;
         else if (str[i] == ')') {
             balance--;
             if (balance < 0) {
-                isBalanced = 0;
+                isBalanced = false;
                 break;
             }
         }

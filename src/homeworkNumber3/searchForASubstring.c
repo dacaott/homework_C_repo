@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 
-int countSubstringOccurrences(char S[], char S1[])
+int countSubstringOccurrences(char s[], char s1[])
 {
     int count = 0;
-    int lenS = (int)strlen(S);
-    int lenS1 = (int)strlen(S1);
+    int lens = strlen(s);
+    int lens1 = strlen(s1);
 
-    for (int i = 0; i <= lenS - lenS1; i++) {
-        if (strncmp(&S[i], S1, lenS1) == 0)
+    for (int i = 0; i <= lens - lens1; i++) {
+        if (strncmp(&s[i], s1, lens1) == 0)
             count++;
     }
 
@@ -16,16 +16,16 @@ int countSubstringOccurrences(char S[], char S1[])
 }
 int main(void)
 {
-    char S[1000] = { 0 };
-    char S1[1000] = { 0 };
+    char s[1000] = { 0 };
+    char s1[1000] = { 0 };
 
     printf("Введите строку S: ");
-    scanf("%s", S);
+    scanf("%s", s);
 
     printf("Введите подстроку S1: ");
-    scanf("%s", S1);
+    scanf("%s", s1);
 
-    int count = countSubstringOccurrences(S, S1);
+    int count = countSubstringOccurrences(s, s1);
 
     printf("Количество вхождений подстроки: %d\n", count);
 
