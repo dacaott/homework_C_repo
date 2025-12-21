@@ -5,25 +5,28 @@
 
 int readInt(const char* prompt, int* out)
 {
-    int n = 0;
-    printf("%s", prompt);
+    char buffer[64];
+    char* endptr;
+    long value;
 
-    while (scanf("%d", &n) != 1) {
-        printf("Некорректный ввод. Попробуйте снова: ");
-        // сбрасываем остаток строки до конца
-        int ch = 0;
-        while ((ch = getchar()) != '\n') {
-            // Просто пропускаем символы
+    while (1) {
+        printf("%s", prompt);
+
+        if (!fgets(buffer, sizeof(buffer), stdin)) {
+            // ошибка ввода
+            continue;
         }
-    }
 
-    // очистка остатка строки после успешного ввода
-    int ch = 0;
-    while ((ch = getchar()) != '\n') {
-        // просто пропускаем символы
+        value = strtol(buffer, &endptr, 10);
+
+        // если strtol ничего не прочитал, повторяем
+        if (endptr == buffer) {
+            printf("Некорректный ввод. Попробуйте снова.\n");
+            continue;
+        }
+        *out = (int)value;
+        return 1;
     }
-    *out = n;
-    return 1;
 }
 
 int main(void)
