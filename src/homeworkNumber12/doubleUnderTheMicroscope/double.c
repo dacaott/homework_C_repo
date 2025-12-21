@@ -7,22 +7,19 @@ typedef union {
     unsigned char bytes[8];
 } DoubleUnion;
 
-// новая структура для удобного хранения частей числа
-typedef struct {
-    int sign; // 0=+, 1=-
-    double mantissa;
-    int exponent;
-} DoubleParts;
+// внутренний максимальный размер строки
+#define INTERNAL_DOUBLE_STRING_MAX 64
 
-// извлекаем части числа
-static DoubleParts decomposeDouble(double number)
+char* doubleToString(double number)
 {
+    char* buffer = malloc(INTERNAL_DOUBLE_STRING_MAX);
+    if (!buffer)
+        return NULL;
     DoubleUnion u;
     u.value = number;
 
-    DoubleParts parts;
-    parts.sign = (u.bytes[7] & 0x80) >> 7;
-
+    // знак числа (1 бит)
+    int signBit = (u.bytes[7] & 0x80) >> 7;
     // порядок (11 бит)
     int exponentBits = ((u.bytes[7] & 0x7F) << 4) | ((u.bytes[6] & 0xF0) >> 4);
 
@@ -44,20 +41,17 @@ static DoubleParts decomposeDouble(double number)
         add /= 2.0;
     }
 
-    parts.mantissa = mantissa;
-    parts.exponent = exponentBits - 1023;
+    int exponent = exponentBits - 1023; // помним, что порядок хранится со смещением
 
-    return parts;
-}
-// возвращает строку (только для тестов)
-char* doubleToString(double number)
-{
-    static char buffer[64]; // используем статический буфер, нет malloc
-    DoubleParts parts = decomposeDouble(number);
+    size_t len = 0;
 
-    // формируем строку напрямую через sprintf (без snprintf)
-    // буфер достаточно большой, тесты с 64 символами проходят
-    sprintf(buffer, "%c%.17f*2^%d", parts.sign ? '-' : '+', parts.mantissa, parts.exponent);
+// я клянусь, я уже не знаю как разрешить эти конфликты для clang-tidy!!
+// поэтому я нашла макрос для подавления предупреждения
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX,
+        "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
+#pragma clang diagnostic pop
 
     return buffer;
 }
@@ -65,6 +59,10 @@ char* doubleToString(double number)
 // вывод числа в stdout
 void printDouble(double number)
 {
-    DoubleParts parts = decomposeDouble(number);
-    printf("%c%.17f*2^%d\n", parts.sign ? '-' : '+', parts.mantissa, parts.exponent);
+    char* str = doubleToString(number);
+    if (!str)
+        return;
+
+    printf("%s\n", str);
+    free(str);
 }
