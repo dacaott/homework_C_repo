@@ -4,12 +4,25 @@
 
 int main()
 {
+    char input[64];
     double userNumber = 0;
     printf("Enter a number: ");
-    scanf("%lf", &userNumber);
 
-    // печать числа в формате (+-)m*2^p
-    printDouble(userNumber);
+    if (!fgets(input, sizeof(input), stdin)) {
+        fprintf(stderr, "Input error\n");
+        return 1;
+    }
+
+    char* end;
+    userNumber = strtod(input, &end);
+
+    // проверяем, что введено именно число и нет др символов
+    if (end == input || (*end != '\n' && *end != '\0')) {
+        fprintf(stderr, "Invalid number\n");
+        return 1;
+    }
+
+    printf("%f\n", userNumber);
 
     return 0;
 }
