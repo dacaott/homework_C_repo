@@ -9,7 +9,8 @@ int main()
     printf("Enter a number: ");
 
     if (!fgets(input, sizeof(input), stdin)) {
-        fprintf(stderr, "Input error\n");
+        // безопасный вывод
+        fputs("Input error\n", stderr);
         return 1;
     }
 
@@ -18,7 +19,8 @@ int main()
 
     // проверяем, что введено именно число и нет др символов
     if (end == input || (*end != '\n' && *end != '\0')) {
-        fprintf(stderr, "Invalid number\n");
+        // и тут тоже безопасный вывод
+        fputs("Invalid number\n", stderr);
         return 1;
     }
 
