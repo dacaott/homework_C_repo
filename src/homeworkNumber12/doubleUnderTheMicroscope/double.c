@@ -7,13 +7,22 @@ typedef union {
     unsigned char bytes[8];
 } DoubleUnion;
 
-char* doubleToString(double number)
+// новая структура для удобного хранения частей числа
+typedef struct {
+    int sign; // 0=+, 1=-
+    double mantissa;
+    int exponent;
+} DoubleParts;
+
+// извлекаем части числа
+static DoubleParts decomposeDouble(double number)
 {
     DoubleUnion u;
     u.value = number;
 
-    // знак числа (1 бит)
-    int signBit = (u.bytes[7] & 0x80) >> 7;
+    DoubleParts parts;
+    parts.sign = (u.bytes[7] & 0x80) >> 7;
+
     // порядок (11 бит)
     int exponentBits = ((u.bytes[7] & 0x7F) << 4) | ((u.bytes[6] & 0xF0) >> 4);
 
@@ -35,8 +44,27 @@ char* doubleToString(double number)
         add /= 2.0;
     }
 
-    int exponent = exponentBits - 1023; // порядок со смещением
+    parts.mantissa = mantissa;
+    parts.exponent = exponentBits - 1023;
 
-    // вывод напрямую через printf
-    printf("%c%.17f*2^%d\n", signBit ? '-' : '+', mantissa, exponent);
+    return parts;
+}
+// возвращает строку (только для тестов)
+char* doubleToString(double number)
+{
+    static char buffer[64]; // используем статический буфер, нет malloc
+    DoubleParts parts = decomposeDouble(number);
+
+    // формируем строку напрямую через sprintf (без snprintf)
+    // буфер достаточно большой, тесты с 64 символами проходят
+    sprintf(buffer, "%c%.17f*2^%d", parts.sign ? '-' : '+', parts.mantissa, parts.exponent);
+
+    return buffer;
+}
+
+// вывод числа в stdout
+void printDouble(double number)
+{
+    DoubleParts parts = decomposeDouble(number);
+    printf("%c%.17f*2^%d\n", parts.sign ? '-' : '+', parts.mantissa, parts.exponent);
 }
