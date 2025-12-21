@@ -7,15 +7,8 @@ typedef union {
     unsigned char bytes[8];
 } DoubleUnion;
 
-// внутренний максимальный размер строки
-#define INTERNAL_DOUBLE_STRING_MAX 64
-
 char* doubleToString(double number)
 {
-    char* buffer = malloc(INTERNAL_DOUBLE_STRING_MAX);
-    if (!buffer)
-        return NULL;
-
     DoubleUnion u;
     u.value = number;
 
@@ -44,25 +37,6 @@ char* doubleToString(double number)
 
     int exponent = exponentBits - 1023; // порядок со смещением
 
-#ifdef STDC_LIB_EXT1
-    snprintf_s(buffer, INTERNAL_DOUBLE_STRING_MAX, _TRUNCATE,
-        "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
-#else
-    // иначе обычный snprintf
-    snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX,
-        "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
-#endif
-
-    return buffer;
-}
-
-// вывод числа в stdout
-void printDouble(double number)
-{
-    char* str = doubleToString(number);
-    if (!str)
-        return;
-
-    printf("%s\n", str);
-    free(str);
+    // вывод напрямую через printf
+    printf("%c%.17f*2^%d\n", signBit ? '-' : '+', mantissa, exponent);
 }
