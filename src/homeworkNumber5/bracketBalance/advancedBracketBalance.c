@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 bool isBalanced(const char* str)
 {
@@ -50,7 +51,13 @@ int main()
     char input[256];
 
     printf("Введите строку для проверки баланса скобок: ");
-    scanf("%255[^\n]", input);
+    if (fgets(input, sizeof(input), stdin) == NULL) {
+        printf("Ошибка ввода!\n");
+        return 1;
+    }
+
+    // убираем символ новой строки, если он есть
+    input[strcspn(input, "\n")] = '\0';
 
     if (isBalanced(input)) {
         printf("Скобки сбалансированы\n");
