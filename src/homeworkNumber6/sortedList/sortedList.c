@@ -99,7 +99,6 @@ void freeList(SortedList* list)
     free(list);
 }
 
-#ifdef TEST
 int toArray(const SortedList* list, int* arr, int maxSize)
 {
     if (!list)
@@ -112,4 +111,3 @@ int toArray(const SortedList* list, int* arr, int maxSize)
     }
     return count;
 }
-#endif
