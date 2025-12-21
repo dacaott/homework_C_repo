@@ -48,6 +48,7 @@ char* doubleToString(double number)
     // я клянусь, я уже не знаю как разрешить эти конфликты для clang-tidy!!
     // поэтому я нашла подавитель предупреждения
     snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX, "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent); // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+    return buffer;
 }
 
 // вывод числа в stdout
