@@ -43,8 +43,11 @@ char* doubleToString(double number)
 
     int exponent = exponentBits - 1023; // помним, что порядок хранится со смещением
 
-    snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX, "%c%.20f*2^%d",
-        signBit ? '-' : '+', mantissa, exponent);
+    size_t len = 0;
+    len += snprintf(buffer + len, INTERNAL_DOUBLE_STRING_MAX - len,
+        "%c", signBit ? '-' : '+');
+    len += snprintf(buffer + len, INTERNAL_DOUBLE_STRING_MAX - len,
+        "%.20f*2^%d", mantissa, exponent);
 
     return buffer;
 }
