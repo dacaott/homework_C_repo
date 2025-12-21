@@ -44,9 +44,14 @@ char* doubleToString(double number)
 
     int exponent = exponentBits - 1023; // порядок со смещением
 
-    // исправлено: 17 знаков после запятой для C99/C11
+#ifdef STDC_LIB_EXT1
+    snprintf_s(buffer, INTERNAL_DOUBLE_STRING_MAX, _TRUNCATE,
+        "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
+#else
+    // иначе обычный snprintf
     snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX,
         "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
+#endif
 
     return buffer;
 }
