@@ -15,6 +15,7 @@ char* doubleToString(double number)
     char* buffer = malloc(INTERNAL_DOUBLE_STRING_MAX);
     if (!buffer)
         return NULL;
+
     DoubleUnion u;
     u.value = number;
 
@@ -41,13 +42,11 @@ char* doubleToString(double number)
         add /= 2.0;
     }
 
-    int exponent = exponentBits - 1023; // помним, что порядок хранится со смещением
+    int exponent = exponentBits - 1023; // порядок со смещением
 
-    size_t len = 0;
-    len += snprintf(buffer + len, INTERNAL_DOUBLE_STRING_MAX - len,
-        "%c", signBit ? '-' : '+');
-    len += snprintf(buffer + len, INTERNAL_DOUBLE_STRING_MAX - len,
-        "%.20f*2^%d", mantissa, exponent);
+    // исправлено: 17 знаков после запятой для C99/C11
+    snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX,
+        "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
 
     return buffer;
 }
