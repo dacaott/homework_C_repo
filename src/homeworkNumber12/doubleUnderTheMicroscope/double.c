@@ -45,15 +45,9 @@ char* doubleToString(double number)
 
     size_t len = 0;
 
-// я клянусь, я уже не знаю как разрешить эти конфликты для clang-tidy!!
-// поэтому я нашла макрос для подавления предупреждения
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX,
-        "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent);
-#pragma clang diagnostic pop
-
-    return buffer;
+    // я клянусь, я уже не знаю как разрешить эти конфликты для clang-tidy!!
+    // поэтому я нашла подавитель предупреждения
+    snprintf(buffer, INTERNAL_DOUBLE_STRING_MAX, "%c%.17f*2^%d", signBit ? '-' : '+', mantissa, exponent); // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 }
 
 // вывод числа в stdout
