@@ -4,60 +4,72 @@
 #include <stdlib.h>
 #include <string.h>
 
+bool isClosing(char c)
+{
+    return c == ')' || c == ']' || c == '}';
+}
+
+bool isOpen(char c)
+{
+    return c == '(' || c == '[' || c == '{';
+}
+
+bool isMatching(char open, char close)
+{
+    return (open == '(' && close == ')') || (open == '[' && close == ']') || (open == '{' && close == '}');
+}
+
 bool isBalanced(const char* str)
 {
     Stack* stack = createStack();
     if (stack == NULL)
         return false;
 
+    bool balanced = true;
+
     for (int i = 0; str[i] != '\0'; i++) {
         char current = str[i];
 
-        bool isOpen = (current == '(' || current == '[' || current == '{');
-
-        if (isOpen) {
-            push(stack, current);
-        } else if (current == ')' || current == ']' || current == '}') {
+        if (isOpen(current)) {
+            if (!push(stack, current)) {
+                balanced = false;
+                break;
+            }
+        } else if (isClosing(current)) {
             if (isEmpty(stack)) {
-                deleteStack(stack);
-                free(stack);
-                return false;
+                balanced = false;
+                break;
             }
 
             int top;
-            if (pop(stack, &top) != 0) {
-                deleteStack(stack);
-                free(stack);
-                return false;
+            if (!pop(stack, &top)) {
+                balanced = false;
+                break;
             }
 
-            // Проверяем соответствие скобок
-            if ((current == ')' && top != '(') || (current == ']' && top != '[') || (current == '}' && top != '{')) {
-                deleteStack(stack);
-                free(stack);
-                return false;
+            if (!isMatching((char)top, current)) {
+                balanced = false;
+                break;
             }
         }
     }
 
-    // Если после обработки всей строки стек пуст - сбалансировано
-    bool result = isEmpty(stack);
+    if (balanced && !isEmpty(stack)) {
+        balanced = false;
+    }
     deleteStack(stack);
-    return result;
+    return balanced;
 }
 
 int main()
 {
     char input[256];
 
-    printf("Введите строку для проверки баланса скобок: ");
+    printf("Введите строку (макс. 255 символов) для проверки баланса скобок: ");
     if (fgets(input, sizeof(input), stdin) == NULL) {
         printf("Ошибка ввода!\n");
         return 1;
     }
-
-    // убираем символ новой строки, если он есть
-    input[strcspn(input, "\n")] = '\0';
 
     if (isBalanced(input)) {
         printf("Скобки сбалансированы\n");
