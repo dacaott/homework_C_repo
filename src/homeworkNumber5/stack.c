@@ -43,7 +43,10 @@ bool pop(Stack* stack, int* outValue)
     }
 
     StackNode* oldNode = stack->head;
-    int res = oldNode->value;
+    if (outValue) {
+        *outValue = oldNode->value;
+    }
+
     stack->head = oldNode->next;
     free(oldNode);
     return true;

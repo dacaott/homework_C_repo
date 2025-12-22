@@ -59,7 +59,8 @@ char* convertString(const char* string, int len)
                 if (top == '(')
                     break;
 
-                (char)pop(stack, (int*)(queue + (countForQueue++)));
+                pop(stack, &top);
+                queue[countForQueue++] = (char)top;
                 queue[countForQueue++] = ' ';
             }
             if (isEmpty(stack)) {
@@ -72,11 +73,10 @@ char* convertString(const char* string, int len)
             int top = 0;
             // если оператор, вытягиваем из стека все операторы с приоритетом >= текущего
             while (!isEmpty(stack)) {
-                if (!peek(stack, &top))
-                    break;
                 peek(stack, &top);
-                if (top == '(' || getPriority((char)top) < getPriority(ch))
+                if (top == '(' || getPriority((char)top) < getPriority(ch)) {
                     break;
+                }
                 pop(stack, &top);
                 queue[countForQueue++] = (char)top;
                 queue[countForQueue++] = ' ';
