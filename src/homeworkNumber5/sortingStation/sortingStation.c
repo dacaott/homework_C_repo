@@ -21,11 +21,14 @@ int getPriority(char operand)
 // Функция преобразования инфиксного выражения в постфиксное
 char* convertString(const char* string, int len)
 {
-    Stack stack;
-    initStack(&stack);
+    Stack* stack = createStack();
+    if (stack == NULL) {
+        return NULL;
+    }
     // каждый символ + пробел
     char* queue = malloc(len * 2 + 1);
     if (queue == NULL) {
+        deleteStack(stack);
         return NULL;
     }
     // текущий индекс в очереди
@@ -47,33 +50,39 @@ char* convertString(const char* string, int len)
             queue[countForQueue++] = ' ';
         } else if (ch == '(') {
             // если открывающая скобка, помещаем в стек
-            push(&stack, ch);
+            push(stack, ch);
         } else if (ch == ')') {
+            int top = 0;
             // если закрывающая скобка, вытягиваем из стека, пока не встретим '('
-            while (!isEmpty(&stack) && peek(&stack) != '(') {
+            while (!isEmpty(stack)) {
+                peek(stack, &top);
+                if (top == '(')
+                    break;
+
                 queue[countForQueue++] = (char)pop(&stack);
                 queue[countForQueue++] = ' ';
             }
-            if (!isEmpty(&stack) && peek(&stack) == '(') {
-                // удаляем '(' из стека
-                pop(&stack);
-            } else {
-                // не нашли '(' — ошибка
-                deleteStack(&stack);
+            if (isEmpty(stack)) {
+                deleteStack(stack);
                 free(queue);
                 return NULL;
             }
         } else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            int top = 0;
             // если оператор, вытягиваем из стека все операторы с приоритетом >= текущего
-            while (!isEmpty(&stack) && getPriority((char)peek(&stack)) >= getPriority(ch) && peek(&stack) != '(') {
-                queue[countForQueue++] = (char)pop(&stack);
+            while (!isEmpty(stack)) {
+                peek(stack, &top);
+                if (top == '(' || getPriority((char)top) < getPriority(ch))
+                    break;
+                pop(stack, &top);
+                queue[countForQueue++] = (char)top;
                 queue[countForQueue++] = ' ';
             }
             // помещаем текущий оператор в стек
-            push(&stack, ch);
+            push(stack, ch);
         } else {
             // неожидаемый символ
-            deleteStack(&stack);
+            deleteStack(stack);
             free(queue);
             return NULL;
         }
@@ -81,12 +90,13 @@ char* convertString(const char* string, int len)
         ++i;
     }
 
+    int top = 0;
     // после обработки всей строки вытягиваем оставшиеся операторы из стека
     while (!isEmpty(&stack)) {
-        char topChar = (char)peek(&stack);
-        if (topChar == '(') {
+        pop(stack, &top);
+        if (top == '(') {
             // осталась незакрытая скобка — ошибка
-            deleteStack(&stack);
+            deleteStack(stack);
             free(queue);
             return NULL;
         }
@@ -94,7 +104,7 @@ char* convertString(const char* string, int len)
         queue[countForQueue++] = ' ';
     }
 
-    deleteStack(&stack);
+    deleteStack(stack);
 
     if (countForQueue > 0) {
         // убрать последний пробел
