@@ -23,7 +23,7 @@ Stack* createStack(void)
 bool push(Stack* stack, int value)
 {
     if (stack == NULL)
-        return;
+        return false;
 
     StackNode* node = malloc(sizeof(StackNode));
     if (!node)

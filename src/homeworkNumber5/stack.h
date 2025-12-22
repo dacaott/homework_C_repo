@@ -1,14 +1,8 @@
 #pragma once
 #include <stdbool.h>
 
-typedef struct StackNode {
-    int value;
-    struct StackNode* next;
-} StackNode;
-
-typedef struct Stack {
-    StackNode* head;
-} Stack;
+typedef struct Stack Stack;
+typedef struct StackNode StackNode;
 
 // Создаёт стек и выделяет память
 Stack* createStack(void);
@@ -20,13 +14,13 @@ void deleteStack(Stack* stack);
 void initStack(Stack* stack);
 
 // Добавление элемента в стек
-void push(Stack* stack, int value);
+bool push(Stack* stack, int value);
 
 // Удаление верхнего элемента и возвращение значения
-int pop(Stack* stack, int* outValue);
+bool pop(Stack* stack, int* outValue);
 
 // Просмотр верхнего элемента без удаления
-int peek(const Stack* stack, int* outValue);
+bool peek(const Stack* stack, int* outValue);
 
 // Проверка, пуст ли стек
 bool isEmpty(const Stack* stack);

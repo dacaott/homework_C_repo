@@ -59,7 +59,7 @@ char* convertString(const char* string, int len)
                 if (top == '(')
                     break;
 
-                queue[countForQueue++] = (char)pop(&stack);
+                (char)pop(stack, (int*)(queue + (countForQueue++)));
                 queue[countForQueue++] = ' ';
             }
             if (isEmpty(stack)) {
@@ -67,10 +67,13 @@ char* convertString(const char* string, int len)
                 free(queue);
                 return NULL;
             }
+            pop(stack, &top); // удалить '('
         } else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
             int top = 0;
             // если оператор, вытягиваем из стека все операторы с приоритетом >= текущего
             while (!isEmpty(stack)) {
+                if (!peek(stack, &top))
+                    break;
                 peek(stack, &top);
                 if (top == '(' || getPriority((char)top) < getPriority(ch))
                     break;
@@ -92,15 +95,16 @@ char* convertString(const char* string, int len)
 
     int top = 0;
     // после обработки всей строки вытягиваем оставшиеся операторы из стека
-    while (!isEmpty(&stack)) {
-        pop(stack, &top);
+    while (!isEmpty(stack)) {
+        if (!pop(stack, &top))
+            break;
         if (top == '(') {
             // осталась незакрытая скобка — ошибка
             deleteStack(stack);
             free(queue);
             return NULL;
         }
-        queue[countForQueue++] = (char)pop(&stack);
+        queue[countForQueue++] = (char)top;
         queue[countForQueue++] = ' ';
     }
 
