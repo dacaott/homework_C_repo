@@ -14,8 +14,9 @@ struct Stack {
 Stack* createStack(void)
 {
     Stack* stack = malloc(sizeof(Stack));
-    if (stack)
+    if (stack != NULL) {
         stack->head = NULL;
+    }
     return stack;
 }
 
@@ -43,10 +44,9 @@ bool pop(Stack* stack, int* outValue)
     }
 
     StackNode* oldNode = stack->head;
-    if (outValue) {
+    if (outValue != NULL) {
         *outValue = oldNode->value;
     }
-
     stack->head = oldNode->next;
     free(oldNode);
     return true;
@@ -58,7 +58,9 @@ bool peek(const Stack* stack, int* outValue)
     if (stack == NULL || stack->head == NULL) {
         return false;
     }
-    *outValue = stack->head->value;
+    if (outValue != NULL) {
+        *outValue = stack->head->value;
+    }
     return true;
 }
 
@@ -79,4 +81,5 @@ void deleteStack(Stack* stack)
         stack->head = temp->next;
         free(temp);
     }
+    free(stack);
 }

@@ -2,7 +2,6 @@
 #include <stdbool.h>
 
 typedef struct Stack Stack;
-typedef struct StackNode StackNode;
 
 // Создаёт стек и выделяет память
 Stack* createStack(void);
