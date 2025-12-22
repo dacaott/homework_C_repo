@@ -56,9 +56,9 @@ char* convertString(const char* string, int len)
             // если закрывающая скобка, вытягиваем из стека, пока не встретим '('
             while (!isEmpty(stack)) {
                 peek(stack, &top);
-                if (top == '(')
+                if (top == '(' || getPriority((char)top) < getPriority(ch)) {
                     break;
-
+                }
                 pop(stack, &top);
                 queue[countForQueue++] = (char)top;
                 queue[countForQueue++] = ' ';

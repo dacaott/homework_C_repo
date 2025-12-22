@@ -6,9 +6,6 @@ typedef struct Stack Stack;
 // Создаёт стек и выделяет память
 Stack* createStack(void);
 
-// Очистка стека и освобождение памяти
-void deleteStack(Stack* stack);
-
 // Добавление элемента в стек
 bool push(Stack* stack, int value);
 
