@@ -9,9 +9,6 @@ Stack* createStack(void);
 // Очистка стека и освобождение памяти
 void deleteStack(Stack* stack);
 
-// Инициализация стека
-void initStack(Stack* stack);
-
 // Добавление элемента в стек
 bool push(Stack* stack, int value);
 
