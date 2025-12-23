@@ -8,8 +8,7 @@ int main()
     int elementCount = 0;
 
     // Считываем числа до конца строки
-    // NOLINT(cert-err34-c)
-    while (elementCount < 100 && scanf("%d", &numbers[elementCount]) == 1) {
+    while (elementCount < 100 && scanf("%d", &numbers[elementCount]) == 1) { // NOLINT
         originalNumbers[elementCount] = numbers[elementCount];
         elementCount++;
 
