@@ -8,7 +8,8 @@ int main()
     int elementCount = 0;
 
     // Считываем числа до конца строки
-    while (elementCount < 100 && scanf("%d", &numbers[elementCount]) == 1) { // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
+    // NOLINT(cert-err34-c)
+    while (elementCount < 100 && scanf("%d", &numbers[elementCount]) == 1) {
         originalNumbers[elementCount] = numbers[elementCount];
         elementCount++;
 
